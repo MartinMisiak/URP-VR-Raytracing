@@ -1,0 +1,18 @@
+The RTReflections Render Feature allows raytraced reflections in XR using the DXR API.
+For this to work, materials which are to reflect and materials which should appear in the reflection have to be based on the CustomShaders/Lit shader.
+To enable raytraced reflections for a given material, the Environment Reflection Mode of the material has to be set to Raytraced.
+
+Known Issues:
+- Reflections are only displayed in play mode during stereoscopic XR rendering. Mono-Support (or in editor rendering) is currently not implemented
+- Works only for Single-Pass Instanced. Multi-Pass is not supported.
+- Objects which are marked as static in terms of Batching (Batching Static) are rendered wrong during the raytracing pass.
+ This issue is probably due to Unity creating a shared material buffer for all batched meshes. This shared buffer clashes with the RT shader...
+- Also objects marked as Batching Static lead to a terrible performance during raytracing. In summary, avoid marking any object as Batching Static if it should interact with raytracing in any way!!! 
+- Real-time shadows and other Env. Reflections do not show up in raytraced reflections (Unity does not load these textures during hitshaders?)
+- Reflections are calculated only for the camera with the MainCamera tag
+
+Possible Future Improvements:
+- Periphery Culling is implemented using a random ray termination technique based on a linear falloff. This leads to performance improvements only for areas where rays are completely culled.
+Culling areas inbetween does not improve performance, as this causes idling SIMT/D lanes. A better approach would be to cull in an alternative foveal space instead of screen space...(Visual-Polar Space, Koskela et al. 2019)
+- Determine the amount of traced rays based on material roughness.
+

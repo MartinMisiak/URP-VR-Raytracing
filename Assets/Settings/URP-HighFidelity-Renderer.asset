@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7383195009701002574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6611c9ecba58abe438ffd6fa9aef2a20, type: 3}
+  m_Name: AAOverride
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  m_affectedLayerMask:
+    m_Bits: 64
+  m_msaaOverride: 1
+  m_resolutionScaleMultiplier: 1
+  m_postAntiAliasingMode: 1
+  m_MainCamera: {fileID: 0}
+  m_overrideCamera: {fileID: 0}
+  m_copyColorShader: {fileID: 4800000, guid: 135d288915cdd0c4f829f7d86478fb21, type: 3}
+  m_copyDepthShader: {fileID: 4800000, guid: 69ef7c9330cd7e04da1876baf148da98, type: 3}
+  m_finalBlitShader: {fileID: 4800000, guid: 819733147f5a24d439ff60c41ec7a0ad, type: 3}
+  m_copyAliasedMaterial: {fileID: 0}
+  m_copyAliasedDepthMaterial: {fileID: 0}
+  m_finalBlitMaterial: {fileID: 0}
+--- !u!114 &-4476788790063797223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1220e3a3189ca2a438c22813beef55c9, type: 3}
+  m_Name: RTReflections
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  m_copyShader: {fileID: 4800000, guid: 12a71031afbd40446891c0ba652311e4, type: 3}
+  m_specularMaskShader: {fileID: 4800000, guid: 53ee7895e1d458e4285ac8114e226bc8,
+    type: 3}
+  m_taaShader: {fileID: 4800000, guid: 67dd83a74191ecb4ca489027b5e1b029, type: 3}
+  m_primaryRayShader: {fileID: 4807578003741378534, guid: f1e74a298e361b84096bf6ce44b3e998,
+    type: 3}
+  m_primaryRayShaderViewport: {fileID: 4807578003741378534, guid: 759c0dd8fb4d3c34a84c05ac52e2edab,
+    type: 3}
+  m_downsampling_factor: 1
+  m_primaryRays: 1
+  m_reflectionRays: 22
+  m_cullPeripheryRays: 1
+  m_useTemporalAccumulation: 1
+  m_temporalFade: 0.8
+  m_rebuildRTAccelerationStruct: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
+  m_Name: URP-HighFidelity-Renderer
+  m_EditorClassIdentifier: 
+  debugShaders:
+    debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7,
+      type: 3}
+  m_RendererFeatures:
+  - {fileID: -4476788790063797223}
+  m_RendererFeatureMap: 19eccb815040dfc1
+  m_UseNativeRenderPass: 0
+  postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
+  xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
+  shaders:
+    blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
+    copyDepthPS: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
+    screenSpaceShadowPS: {fileID: 0}
+    samplingPS: {fileID: 4800000, guid: 04c410c9937594faa893a11dceb85f7e, type: 3}
+    stencilDeferredPS: {fileID: 4800000, guid: e9155b26e1bc55942a41e518703fe304, type: 3}
+    fallbackErrorPS: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
+    materialErrorPS: {fileID: 4800000, guid: 5fd9a8feb75a4b5894c241777f519d4e, type: 3}
+    coreBlitPS: {fileID: 4800000, guid: 93446b5c5339d4f00b85c159e1159b7c, type: 3}
+    coreBlitColorAndDepthPS: {fileID: 4800000, guid: d104b2fc1ca6445babb8e90b0758136b,
+      type: 3}
+    cameraMotionVector: {fileID: 4800000, guid: c56b7e0d4c7cb484e959caeeedae9bbf,
+      type: 3}
+    objectMotionVector: {fileID: 4800000, guid: 7b3ede40266cd49a395def176e1bc486,
+      type: 3}
+  m_AssetVersion: 1
+  m_OpaqueLayerMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+  m_TransparentLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_DefaultStencilState:
+    overrideStencilState: 0
+    stencilReference: 0
+    stencilCompareFunction: 8
+    passOperation: 2
+    failOperation: 0
+    zFailOperation: 0
+  m_ShadowTransparentReceive: 1
+  m_RenderingMode: 0
+  m_DepthPrimingMode: 0
+  m_AccurateGbufferNormals: 0
+  m_ClusteredRendering: 0
+  m_TileSize: 32
+  m_IntermediateTextureMode: 1

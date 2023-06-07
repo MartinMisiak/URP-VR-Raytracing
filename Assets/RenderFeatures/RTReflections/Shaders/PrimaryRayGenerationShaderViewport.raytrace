@@ -1,0 +1,90 @@
+#include "RT_Common.cginc"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Sampling/Hammersley.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Random.hlsl"
+#pragma max_recursion_depth 2
+
+// texture to store raytracing result
+RWTexture2D<float4> _RT_SpecularRadiance;
+
+// Mask used to cull rays. We wish to only trace rays which end up hitting specular surfaces
+Texture2D _RT_SpecularMask;
+SamplerState sampler_RT_SpecularMask;
+
+float4x4 _CameraToWorld[2];
+float4x4 _CameraInverseProjection[2];
+float    _SpreadAngle[2];
+int      _NumPrimarySamples;
+int      _FrameCounter;
+int      _CullPeripheryRays;
+
+// float4 unity_AmbientSky;
+
+// [shader("closesthit")]
+// void ClosestHitMain(inout RayPayload rayPayload : SV_RayPayload, AttributeData attributeData : SV_IntersectionAttributes)
+// {
+//     rayPayload.radiance = float3(1.0, 1.0, 1.0);
+// }
+
+// miss shader, used when we don't hit any geometry
+[shader("miss")]
+void MissShader(inout RayPayload rayPayload : SV_RayPayload)
+{
+	//rayPayload.radiance = float4(1, 1, 1, 1);//float4(0, 0.65, 1, 1);
+	rayPayload.radiance = float4(0.1921, 0.3019, 0.4745, 1);//float4(0, 0.65, 1, 1);
+}
+
+[shader("raygeneration")]
+void PrimaryRayGeneration()
+{
+	uint3 dispatchIdx = DispatchRaysIndex().xyz; // current pixel
+	uint2 launchDim = DispatchRaysDimensions().xy; // target resolution
+    float2 uv       = (float2)dispatchIdx.xy / (float2)launchDim;
+	float IG_noise  = InterleavedGradientNoise(float2(dispatchIdx.x, dispatchIdx.y) , _FrameCounter);
+	float mask      = _RT_SpecularMask.SampleLevel(sampler_RT_SpecularMask, uv, 0).r;
+
+	if(mask == 0)
+	{
+		_RT_SpecularRadiance[dispatchIdx.xy] = float4(0,0,0,0); // DEBUG-COLOR
+		return;
+	}
+
+	float4 accumulatedRadiance = float4(0,0,0,0);
+	for(int i = 0; i < _NumPrimarySamples; i++)
+	{
+		float2 pixelExtent = 1.0 / (float2)launchDim;
+		float2 rnd = Hammersley2d( i, _NumPrimarySamples) * 2.0f - 1.0f; // [-1,1]
+		float2 jitteredUV = uv + rnd * 0.5f*pixelExtent;
+
+		float2 uv_ndc = jitteredUV * 2.0f - 1.0f;
+		float3 origin = mul(_CameraToWorld[dispatchIdx.z], float4(0.0f, 0.0f, 0.0f, 1.0f)).xyz;
+		float3 rayDir = mul(_CameraInverseProjection[dispatchIdx.z], float4(uv_ndc, 0.0f, 1.0f)).xyz;
+		rayDir = mul(_CameraToWorld[dispatchIdx.z], float4(rayDir, 0.0f)).xyz;
+		rayDir = normalize(rayDir);
+
+		// RayDesc is DXR-defined struct
+		RayDesc rayDesc;
+		rayDesc.Origin = origin; // start at camera position
+		rayDesc.Direction = rayDir;
+		rayDesc.TMin = 0.25; // offset first viable hit by 25cm. Counteracts hitting the HMD model with the primary rays
+		rayDesc.TMax = 100;
+		// Create and init the ray payload
+		RayPayload rayPayload;
+		rayPayload.radiance = float4(0.0, 0.0, 0.0, 0.0);
+		IG_noise = InterleavedGradientNoise(float2(dispatchIdx.x, dispatchIdx.y) , _FrameCounter*(i+1)); // give each primary ray a unique noise value
+		rayPayload.random = IG_noise;
+		rayPayload.depth = 0;
+		rayPayload.rayEyeIndex = dispatchIdx.z;
+		rayPayload.spreadAngle = _SpreadAngle[dispatchIdx.z];
+
+		// shoot primary ray
+		TraceRay(_RaytracingAccelerationStructure, RAY_FLAG_NONE, RAYTRACING_OPAQUE_FLAG, 0, 1, 0, rayDesc, rayPayload);
+		accumulatedRadiance += rayPayload.radiance;
+	}
+	accumulatedRadiance 	/= _NumPrimarySamples;
+
+	// store result
+	_RT_SpecularRadiance[dispatchIdx.xy] = accumulatedRadiance;	
+}
+
+
