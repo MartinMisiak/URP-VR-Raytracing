@@ -2,7 +2,8 @@
 This plugin was developed for the publication "The Impact of Reflection Approximations on Visual Quality in Virtual Reality" - Mišiak et al. 2023
 https://dl.acm.org/doi/10.1145/3605495.3605794
 
-![Title_Figure](https://github.com/MartinMisiak/URP-VR-Raytracing/assets/40168931/c168f74d-1328-4771-8ffc-1d39e4d80853)
+
+![obj_mat_3](https://github.com/MartinMisiak/URP-VR-Raytracing/assets/40168931/483dfb14-69fb-4a9e-b515-c330eab6bb0b)
 
 
 
