@@ -86,6 +86,8 @@ Shader "CustomShaders/TemporalAAShader"
             TEXTURE2D_X(_TemporalAATexture); 
             SAMPLER(sampler_MainTex);
             SAMPLER(sampler_TemporalAATexture);
+            int _ResolutionX;
+            int _ResolutionY;
             //sampler2D _MotionVectorTexture;
 			
 			float _TemporalFade;
@@ -159,7 +161,7 @@ Shader "CustomShaders/TemporalAAShader"
 
             uint2 convertToPixelCoords(float2 uv)
             {
-                return uint2( uint(uv.x * _ScreenParams.x), uint(uv.y * _ScreenParams.y) );
+                return uint2( uint(uv.x * _ResolutionX), uint(uv.y * _ResolutionY) );
             }
 
             // [Pedersen16] - https://github.com/playdeadgames/temporal/
@@ -238,14 +240,6 @@ Shader "CustomShaders/TemporalAAShader"
                 float4 rd = mul(_invP[unity_eyeIndex], float4(pos, 1));
                 rd.xyz /= rd.w;
 
-                // ENABLE ONLY FOR TAA-TEST CONDITION !!!
-                // Manual Hack TAA-on-off based on world space position...
-                //float4 fragmentWS = mul(_Debug_CameraToWorldMatrix[unity_eyeIndex], float4(rd.xyz * d01, 1));
-                //if(fragmentWS.x < 0)
-                //    return float4(curCol, 1);
-                // Manual Hack TAA-on-off based on world space position...
-
-
                 float4 temporalUV = mul(_FrameMatrix[unity_eyeIndex], float4(rd.xyz * d01, 1));
                 temporalUV /= temporalUV.w;                 
                 float2 temporalUV_01 = temporalUV.xy*0.5+0.5;
@@ -253,7 +247,7 @@ Shader "CustomShaders/TemporalAAShader"
                 // Naive bilinear sampling
                 // float3 lastCol = SAMPLE_TEXTURE2D_X(_TemporalAATexture, sampler_TemporalAATexture, temporalUV.xy*0.5+0.5).xyz;
                 // Bicubic Sampling - improves sharpness
-                float3 lastCol = bicubicSample_CatmullRom(TEXTURE2D_X_ARGS(_TemporalAATexture, sampler_TemporalAATexture), temporalUV_01, _ScreenParams.xy ).rgb;
+                float3 lastCol = bicubicSample_CatmullRom(TEXTURE2D_X_ARGS(_TemporalAATexture, sampler_TemporalAATexture), temporalUV_01, float2(_ResolutionX, _ResolutionY) ).rgb;
 
                 // temporal blending of samples which have previously been culled from the periphery causes noticeable ghosting, best to ignore taa for these samples
                 float fovealCenter_offset    = 0.05 * (1.0 - 2.0*unity_eyeIndex); // offset the center of each eye in the nasal direction (inwards towards the nose), due to asymmetric projection frusta

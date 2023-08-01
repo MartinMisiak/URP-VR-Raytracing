@@ -265,7 +265,7 @@ public class RTReflections : ScriptableRendererFeature
     private RayTracingShader m_currentlyUsedRTShader = null;
     [SerializeField] RayTracingShader m_primaryRayShader;
     [SerializeField] RayTracingShader m_primaryRayShaderViewport;
-    [SerializeField] public int m_downsampling_factor = 1;
+    [SerializeField] private int m_downsampling_factor = 1; // Does not work atm
     [SerializeField] public int m_primaryRays = 8;
     [SerializeField] public int m_reflectionRays = 1;
     [SerializeField] public bool m_cullPeripheryRays = true;

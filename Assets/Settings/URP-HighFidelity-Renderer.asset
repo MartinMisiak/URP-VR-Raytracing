@@ -26,34 +26,6 @@ MonoBehaviour:
   m_copyAliasedMaterial: {fileID: 0}
   m_copyAliasedDepthMaterial: {fileID: 0}
   m_finalBlitMaterial: {fileID: 0}
---- !u!114 &-4476788790063797223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1220e3a3189ca2a438c22813beef55c9, type: 3}
-  m_Name: RTReflections
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  m_copyShader: {fileID: 4800000, guid: 12a71031afbd40446891c0ba652311e4, type: 3}
-  m_specularMaskShader: {fileID: 4800000, guid: 53ee7895e1d458e4285ac8114e226bc8,
-    type: 3}
-  m_taaShader: {fileID: 4800000, guid: 67dd83a74191ecb4ca489027b5e1b029, type: 3}
-  m_primaryRayShader: {fileID: 4807578003741378534, guid: f1e74a298e361b84096bf6ce44b3e998,
-    type: 3}
-  m_primaryRayShaderViewport: {fileID: 4807578003741378534, guid: 759c0dd8fb4d3c34a84c05ac52e2edab,
-    type: 3}
-  m_downsampling_factor: 1
-  m_primaryRays: 1
-  m_reflectionRays: 22
-  m_cullPeripheryRays: 1
-  m_useTemporalAccumulation: 1
-  m_temporalFade: 0.8
-  m_rebuildRTAccelerationStruct: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,8 +42,8 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7,
       type: 3}
   m_RendererFeatures:
-  - {fileID: -4476788790063797223}
-  m_RendererFeatureMap: 19eccb815040dfc1
+  - {fileID: 3254924623838501268}
+  m_RendererFeatureMap: 94d99036b3d02b2d
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -111,3 +83,31 @@ MonoBehaviour:
   m_ClusteredRendering: 0
   m_TileSize: 32
   m_IntermediateTextureMode: 1
+--- !u!114 &3254924623838501268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1220e3a3189ca2a438c22813beef55c9, type: 3}
+  m_Name: RTReflections
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  m_copyShader: {fileID: 4800000, guid: 12a71031afbd40446891c0ba652311e4, type: 3}
+  m_specularMaskShader: {fileID: 4800000, guid: 53ee7895e1d458e4285ac8114e226bc8,
+    type: 3}
+  m_taaShader: {fileID: 4800000, guid: 67dd83a74191ecb4ca489027b5e1b029, type: 3}
+  m_primaryRayShader: {fileID: 4807578003741378534, guid: f1e74a298e361b84096bf6ce44b3e998,
+    type: 3}
+  m_primaryRayShaderViewport: {fileID: 4807578003741378534, guid: 759c0dd8fb4d3c34a84c05ac52e2edab,
+    type: 3}
+  m_downsampling_factor: 1
+  m_primaryRays: 1
+  m_reflectionRays: 20
+  m_cullPeripheryRays: 1
+  m_useTemporalAccumulation: 1
+  m_temporalFade: 0.8
+  m_rebuildRTAccelerationStruct: 0
