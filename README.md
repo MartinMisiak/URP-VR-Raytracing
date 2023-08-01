@@ -2,7 +2,8 @@
 This plugin was developed for the publication "The Impact of Reflection Approximations on Visual Quality in Virtual Reality" - Mišiak et al. 2023
 https://dl.acm.org/doi/10.1145/3605495.3605794
 
-![obj_mat_3](https://github.com/MartinMisiak/URP-VR-Raytracing/assets/40168931/7edaf6f8-b011-4c49-98ed-d2890391d608)
+![Title_Figure](https://github.com/MartinMisiak/URP-VR-Raytracing/assets/40168931/c168f74d-1328-4771-8ffc-1d39e4d80853)
+
 
 
 Hardware accelerated raytraced reflections for use in VR. Developed and tested with Unity 2021.3.6f1, Universal RP 12.1.7, OpenXR Plugin 1.4.2
